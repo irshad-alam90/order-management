@@ -1,0 +1,82 @@
+<ion-pane>
+  <ion-header-bar class="bar-stable greenstork-header" align-title="center" >
+    <div class="buttons">
+      <a ng-click="myGoBack()" class="back-button back-button-width"><i class="ion-ios-arrow-back"></i></a>
+    </div>
+  </ion-header-bar>
+  <ion-content class="has-header content" ng-init="orderDCtrl.getOrderDetails();">
+    <div class="row" ng-if="orderDCtrl.orderDetail">
+      <div class="mom">
+        <h3>Order #{{orderDCtrl.orderDetail.id}}</h3>
+        <div class="col-30">Time & date</div>
+        <div class="col-70">{{orderDCtrl.orderDetail.attributes.time}} {{orderDCtrl.orderDetail.attributes.date}}</div>
+        <div class="col-30">Order Type:</div>
+        <div class="col-70">{{orderDCtrl.orderDetail.attributes.type}}</div>
+        <div class="col-30">Medical or Rec:</div>
+        <div class="col-70">{{orderDCtrl.orderDetail.attributes.medical}}</div>
+        <div class="col-30">When:</div>
+        <div class="col-70">{{orderDCtrl.orderDetail.attributes.delivery_time}}&nbsp;</div>
+        <div class="col-30">Status:</div>
+        <div class="col-70">
+          <select ng-model="orderDCtrl.status" ng-change="orderDCtrl.update()">
+            <option ng-repeat="status in orderDCtrl.statuses" value="{{status}}">{{status | capitalize}}</option>
+          </select>
+        </div>
+        <div class="col-30">Name:</div>
+        <div class="col-70">{{orderDCtrl.orderDetail.attributes.name}}</div>
+        <div class="col-30">Address:</div>
+        <div class="col-70 cur-pointer" ng-click="orderDCtrl.showMap(orderDCtrl.orderDetail.attributes.address)">{{orderDCtrl.orderDetail.attributes.address}}</div>
+        <div class="col-30">Unit/Suite:</div>
+        <div class="col-70">{{orderDCtrl.orderDetail.attributes.unit}}</div>
+        <div class="col-30">Phone:</div>
+        <div class="col-70">{{orderDCtrl.orderDetail.attributes.phone_no}}</div>
+        <div class="col-30">Email:</div>
+        <div class="col-70">{{orderDCtrl.orderDetail.attributes.email}}</div>
+        <div class="col-30">Valid ID:</div>
+        <div class="col-70">
+          <img ng-src="{{orderDCtrl.govId}}" ng-if="orderDCtrl.govId" class="img-set cur-pointer" ng-click="orderDCtrl.showImage(1)"/>
+        </div>
+        <div class="col-30">View Doctor's Rec:</div>
+        <div class="col-70">
+          <img ng-src="{{orderDCtrl.docId}}" ng-if="orderDCtrl.docId" class="img-set cur-pointer" 
+          ng-click="orderDCtrl.showImage(2)"/>
+        </div>
+
+        <h4>Order Details</h4>
+        <div ng-repeat="item in orderDCtrl.items">
+          <div class="col-30" >{{item.quantity}} x {{item.unit_name}} {{item.name}}</div>
+          <div class="col-70">${{item.total_price}}</div>
+        </div>
+        <div class="col-30">Subtotal:</div>
+        <div class="col-70">${{orderDCtrl.orderDetail.attributes.total}}</div>
+        <div ng-if="orderDCtrl.orderDetail.attributes.type == 'delivery'">              <div class="col-30">Delivery Fee</div>
+          <div class="col-70">${{orderDCtrl.orderDetail.attributes.delivery_fee}}</div>
+        </div>
+
+        <div class="col-30">Tax:</div>
+        <div class="col-70">${{orderDCtrl.orderDetail.attributes.sales_tax}}</div>
+        <div class="col-30">Total:</div>
+        <div class="col-70">${{orderDCtrl.orderDetail.attributes.total_amount}}</div>
+        <div class="col-30">Payment Method:</div>
+        <div class="col-70">{{orderDCtrl.orderDetail.attributes.payment_method}}</div>
+        <div class="col-30">Delivery Notes:</div>
+        <div class="col-70">{{orderDCtrl.orderDetail.attributes.delivery_notes}}</div>
+      </div>
+    </div>
+
+    <script id="image-modal.html" type="text/ng-template">
+      <ion-header-bar class="greenstork-header">
+        <span ng-click="orderDCtrl.closeModal();" class="left ion-ios-close-empty"></span>
+      </ion-header-bar>
+      <div class="modal image-modal transparent">
+        <ion-pane class="transparent">
+           <img ng-src="{{orderDCtrl.imageSrc}}" class="fullscreen-image"/>
+        </ion-pane>
+      </div>
+    </script>
+
+  </ion-content>
+</ion-pane>
+
+
+

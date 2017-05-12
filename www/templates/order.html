@@ -1,0 +1,102 @@
+<ion-pane>
+    <ion-header-bar class="bar-stable greenstork-header" align-title="center" ng-init="orderCtrl.getOrder()">
+        <div class="buttons">
+            <button ng-click="orderCtrl.logout()" class="logout-button">Logout</button>
+        </div>
+
+    </ion-header-bar>
+    <ion-content class="content">
+    	<div>
+    	<div class = "row width-row">
+      	<div class="list list-inset col">
+      		<div class="input-label">Store</div>
+  			<label class="item item-input item-select">
+      			<div class="input-label">&nbsp;</div>
+      			<select ng-model="orderCtrl.selectedstore" ng-change="orderCtrl.change()" id="store-select">
+        				<option ng-repeat="option in orderCtrl.stores" ng-value="option.id">{{option.name}}</option>
+            </select>
+    			</label>
+    		</div>
+
+
+    		<div class="list list-inset col">
+    			<div class="input-label">Order Date</div>
+  			   <label class="item item-input item-select">
+      			<div class="input-label">&nbsp;</div>
+      			<select ng-model="orderCtrl.selectedODate" ng-change="orderCtrl.change()">
+        				<option ng-repeat="option in orderCtrl.order_date" value="{{option}}">{{option}}</option>
+      			</select>
+    			</label>
+    		</div>
+  		</div>
+
+
+  		<div class="row width-row">
+  		<div class="list list-inset col">
+  			<div class="input-label">Filter by Status</div>
+			<label class="item item-input item-select">
+    			<div class="input-label">&nbsp;</div>
+    			<select ng-model="orderCtrl.selectedstatus" ng-change="orderCtrl.change()">
+      				<option ng-repeat="option in orderCtrl.statuses" value="{{option}}">{{option | capitalize}}</option>
+    			</select>
+  			</label>
+  		</div>
+
+
+  		<div class="list list-inset col">
+  			<div class="input-label">Type</div>
+			<label class="item item-input item-select">
+    			<div class="input-label">&nbsp;</div>
+    			<select ng-model="orderCtrl.selectedtype" ng-change="orderCtrl.change()">
+      				<option ng-repeat="option in orderCtrl.type" value="{{option}}">{{option}}</option>
+
+    			</select>
+  			</label>
+  		</div>
+  		</div>
+
+      <div class="order-table">
+  		  <div class="card" ng-repeat="order in orderCtrl.orders" ng-if="orderCtrl.orders.length > 0" ng-click="orderCtrl.orderDet(order.id)">
+            <div class="item item-divider">
+                <div class="row">
+                    <div class="col text-left">
+                        <div class="order-no">Order #{{order.id}}</div>
+                    </div>
+                    <div class="col text-center">
+                        <div>{{order.attributes.time}}</div>
+                    </div>
+                    <div class="col text-right">
+                        <div>{{order.attributes.date}}</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="item">
+                <div class="row responsive-sm order-page">
+                    <div class="col text-left dispensary-name">
+                        <div>{{order.attributes.dispensary}}</div>
+                    </div>
+                    <strong class="col text-center">$ {{order.attributes.total}}</strong>
+
+                    <div class="col text-center">
+                        <div class="badge" style="top: 17px;" ng-class="{'badge-balanced': order.data.attributes.status == 'delivered', 'badge-energized': order.data.attributes.status != 'delivered'}">{{order.attributes.status| uppercase}}</div>
+                    </div>
+
+                </div>
+            </div>
+          </div>
+        </div>
+
+        <ion-infinite-scroll ng-if="orderCtrl.loadOrderIncomplete"
+            on-infinite="orderCtrl.loadMoreOrders()" distance="70%">
+        </ion-infinite-scroll>
+
+        <h3 ng-if="orderCtrl.orders.length == 0" style="text-align:center;">
+          No orders to display
+        </h3>
+
+
+    </div>
+	</ion-content>
+</ion-pane>
+

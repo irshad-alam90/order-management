@@ -1,0 +1,56 @@
+<ion-pane>   
+    <ion-content class="login-page">
+        <div>
+            <div class="text-content-top">
+                <h2>GreenStork</h2>
+                <p>Mobile Order Management</p>
+            </div>
+            <div class="list list-inset">
+                <label class="item item-input">
+                    <input type="text" placeholder="Email" ng-model="loginCtrl.userLoginInfo.email" required>
+                </label>
+                <label class="item item-input">
+                    <input type="password" placeholder="Password" ng-model="loginCtrl.userLoginInfo.password" required>
+                </label>
+                <a ng-click="loginCtrl.openModal()" class="pull-right f-password">Forgot Password</a>
+                <button class="button button-block button-positive-green" ng-click="loginCtrl.login()">Login</button>
+            </div>
+        </div>
+         
+    </ion-content>
+</ion-pane>
+
+<script id="forgot-password.html" type="text/ng-template">
+    <ion-modal-view>
+        <ion-header-bar class="greenstork-header" align-title="center">
+            <span ng-click="loginCtrl.closeModal();" class="left ion-ios-close-empty"></span>
+            <span class="title">Reset Password</span>
+        </ion-header-bar>
+        <ion-content>
+            <div class="list list-inset" ng-show="loginCtrl.showResetPassword == 1">
+                <div class="R-password">
+                    <label class="item item-input">
+                        <input type="text" placeholder="Email" ng-model="loginCtrl.forgotPassword.email">
+                    </label>
+                    <button class="button button-block button-positive-green" ng-click="loginCtrl.resetPasswordInstructions()">Reset</button>
+                </div>
+            </div>
+            <div class="list list-inset" ng-show="loginCtrl.showResetPassword == 2">
+                <label class="item item-input">
+                    <input type="text" placeholder="Code" ng-model="loginCtrl.forgotPassword.code">
+                </label>
+                <button class="button button-block button-positive-green" ng-click="loginCtrl.codeConfirm()">Verify Code</button>
+            </div>
+            <div class="list list-inset" ng-show="loginCtrl.showResetPassword == 3">
+                <label class="item item-input">
+                    <input type="password" placeholder="Password" ng-model="loginCtrl.forgotPassword.password">
+                </label>
+                <label class="item item-input">
+                    <input type="password" placeholder="Re-enter Password" ng-model="loginCtrl.forgotPassword.passwordConfirmation">
+                </label>
+                <button class="button button-block button-positive-green" ng-click="loginCtrl.resetPassword()">Reset Password</button>
+            </div>
+        </ion-content>
+    </ion-modal-view>
+</script>
+   
